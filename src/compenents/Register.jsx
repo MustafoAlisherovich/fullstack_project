@@ -1,10 +1,28 @@
 import React, { useState } from 'react'
 import {Input} from '../ui'
+import { useDispatch, useSelector } from 'react-redux';
+import { signUserFailure, signUserStart, signUserSuccess } from '../slice/Auth';
+import AuthService from '../service/Auth';
+import {ValidationError} from './';
 
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
+
+  const dispatch = useDispatch();
+  const {isLoading} = useSelector(state => state.auth)
+
+  const registerHandler = async () => {
+    dispatch(signUserStart())
+    const user = {username: name, email, password}
+    try {
+      const response = await AuthService.userRegister(user)
+      dispatch(signUserSuccess(response.user))
+    } catch (error) {
+      dispatch(signUserFailure(error.response.data.errors))
+    }
+  }
 
   return (
     <section className="vh-100">
@@ -16,13 +34,17 @@ const Register = () => {
 
             <h3 className="mb-4">Sign up</h3>
 
+            <ValidationError />
+
             <Input label={'username'} state={name} setState={setName} />
 
             <Input label={'email'} type={'email'} state={email} setState={setEmail} />
 
             <Input label={'password'} type={'password'} state={password} setState={setPassword} />
-            <button data-mdb-button-init data-mdb-ripple-init className="btn btn-outline-success btn-lg btn-block" type="submit">Register</button>
-
+            <button disabled={isLoading}
+             onClick={registerHandler}
+              data-mdb-button-init data-mdb-ripple-init className="btn btn-outline-primary btn-lg btn-block"
+               type="submit">{isLoading ? 'Loading...' : 'Register'}</button>
 
           </div>
         </div>
