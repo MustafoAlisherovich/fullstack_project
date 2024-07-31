@@ -1,7 +1,11 @@
 export const setItem = (key, data) => {
-    try {
-        localStorage.setItem(key, data)
-    } catch (error) {
-        console.log('Error saving data ');
-    }
+	try {
+		localStorage.setItem(key, data)
+	} catch (error) {
+		console.log('Error saving data')
+	}
+}
+
+export const getItem = (key) => {
+	
 }

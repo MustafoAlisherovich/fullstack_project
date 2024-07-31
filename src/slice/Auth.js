@@ -15,8 +15,8 @@ export const authSlice = createSlice({
         signUserStart: state => {
             state.isLoading = true
         },
-        signUserSuccess: (state, action) => {
-            state.isLoading = true
+        signUserSuccess: (state, action) => {  
+            state.loggedIn = true
             state.isLoading = false
             state.user = action.payload
             setItem('token', action.payload.token)
