@@ -31,7 +31,7 @@ const Register = () => {
     if (loggedIn) {
       navigate('/')
     }
-  }, [])
+  }, [loggedIn])
 
   return (
     <section className="vh-100">

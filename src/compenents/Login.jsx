@@ -30,7 +30,7 @@ const Login = () => {
     if (loggedIn) {
       navigate('/')
     }
-  }, [])
+  }, [loggedIn])
 
 
   return (
@@ -47,7 +47,7 @@ const Login = () => {
 
             <Input label={'Email address'} state={email} setState={setEmail} />
 
-            <Input label={'Password'} state={password} setState={setPassword} />
+            <Input label={'Password'} type={'password'} state={password} setState={setPassword} />
 
             <button disabled={isLoading}
              onClick={loginHandler}

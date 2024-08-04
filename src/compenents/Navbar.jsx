@@ -1,9 +1,20 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { removeItem } from "../helpers/PersistanceStorage";
+import { logoutUser } from "../slice/Auth";
 
 const Navbar = () => {
+  
   const { loggedIn, user } = useSelector((state) => state.auth);
+  const navigate = useNavigate()
+  const dispath = useDispatch()
+  
+  const logoutHandler = () => {
+    dispath(logoutUser())
+    removeItem('token')
+    navigate('/login')
+  }
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -16,14 +27,23 @@ const Navbar = () => {
           <form className="d-flex" role="search">
             {loggedIn ? (
               <>
+                 <Link to="/create_article">
+                  <button 
+                  className="btn btn-outline-success"
+                  type="submit"
+                  style={{ marginRight: "10px" }}
+                  >
+                    Create
+                  </button>
+                </Link>
                 <button
                   style={{ marginRight: "10px" }}
-                  className="btn btn-outline-danger"
+                  className="btn btn-outline-info"
                   type="submit"
                 >
                   {user.username}
                 </button>
-                <button className="btn btn-outline-success" type="submit">
+                <button onClick={logoutHandler} className="btn btn-outline-danger" type="submit">
                   Logout
                 </button>
               </>
