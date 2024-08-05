@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import ArticleForm from "./ArticleForm";
 import ArticleService from "../service/article";
-import { useDispatch, useSelector } from "react-redux";
-import { getArticleSuccess, postArticleFailure, postArticleStart, postArticleSuccess } from "../slice/Article";
+import { useDispatch, } from "react-redux";
+import {  postArticleFailure, postArticleStart, postArticleSuccess } from "../slice/Article";
 import { useNavigate } from "react-router-dom";
 
 const CreateArticle = () => {
